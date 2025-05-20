@@ -71,15 +71,75 @@ document.addEventListener("DOMContentLoaded", function() {
 		return 0;
 	}
 
-	// New function to check if a subclass needs image centering adjustment
-	function needsCenteringAdjustment(subclass, className) {
-		// List of subclasses that need centering adjustment
-		const needsAdjustment = [
-			"Path of the Berserker",
-			// Add more subclasses that need adjustment here as you identify them
+	function preloadImages() {
+		const urlsToCache = [
+			'/classes/Barbarian.png',
+			'/classes/Cleric.png',
+			'/classes/Druid.png',
+			'/classes/Fighter.png',
+			'/classes/Monk.png',
+			'/classes/Paladin.png',
+			'/classes/Ranger.png',
+			'/classes/Rogue.png',
+			'/classes/Sorcerer.png',
+			'/classes/Warlock.png',
+			'/classes/Wizard.png',
+			'/subclasses/Aberrant Sorcerer.png',
+			'/subclasses/Abjurer Wizard.png',
+			'/subclasses/Ancients Paladin.png',
+			'/subclasses/Arcane Trickster Rogue.png',
+			'/subclasses/Archfey Warlock.png',
+			'/subclasses/Assassin Rogue.png',
+			'/subclasses/Battle Master Fighter.png',
+			'/subclasses/Beast Master Ranger.png',
+			'/subclasses/Berserker Barbarian.png',
+			'/subclasses/Celestial Warlock.png',
+			'/subclasses/Champion Fighter.png',
+			'/subclasses/Clockwork Sorcerer.png',
+			'/subclasses/Dance Bard.png',
+			'/subclasses/Devotion Paladin.png',
+			'/subclasses/Diviner Wizard.png',
+			'/subclasses/Draconic Sorcerer.png',
+			'/subclasses/Eldritch Knight Fighter.png',
+			'/subclasses/Elements Monk.png',
+			'/subclasses/Evoker Wizard.png',
+			'/subclasses/Fey Wanderer Ranger.png',
+			'/subclasses/Fiend Warlock.png',
+			'/subclasses/Glamour Bard.png',
+			'/subclasses/Gloom Stalker Ranger.png',
+			'/subclasses/Glory Paladin.png',
+			'/subclasses/Great Old One Warlock.png',
+			'/subclasses/Hunter Ranger.png',
+			'/subclasses/Illusionist Wizard.png',
+			'/subclasses/Land Druid.png',
+			'/subclasses/Life Cleric.png',
+			'/subclasses/Light Cleric.png',
+			'/subclasses/Lore Bard.png',
+			'/subclasses/Mercy Monk.png',
+			'/subclasses/Moon Druid.png',
+			'/subclasses/Open Hand Monk.png',
+			'/subclasses/Psi Warrior Fighter.png',
+			'/subclasses/Sea Druid.png',
+			'/subclasses/Shadow Monk.png',
+			'/subclasses/Soulknife Rogue.png',
+			'/subclasses/Stars Druid.png',
+			'/subclasses/Thief Rogue.png',
+			'/subclasses/Trickery Cleric.png',
+			'/subclasses/Valor Bard.png',
+			'/subclasses/Vengeance Paladin.png',
+			'/subclasses/War Cleric.png',
+			'/subclasses/Wild Heart Barbarian.png',
+			'/subclasses/Wild Magic Sorcerer.png',
+			'/subclasses/World Tree Barbarian.png',
+			'/subclasses/Zealot Barbarian.png'
 		];
-		
-		return needsAdjustment.includes(subclass);
+
+		urlsToCache.forEach(url => {
+			const img = new Image();
+			img.src = url;
+			img.onload = () => console.log(`Preloaded image: ${url}`);
+			img.onerror = () => console.error(`Failed to preload image: ${url}`);
+		});
 	}
 
 	function createViewer() {
@@ -428,4 +488,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	// Initialize with first class
 	showClass(0);
+
+	// Preload images after DOM is loaded
+	preloadImages();
 });
