@@ -6,7 +6,7 @@
     <title>D&D Classes</title>
     <link rel="stylesheet" href="style.css">
     <!-- version -->
-    <meta name="version" content="1.0.6">
+    <meta name="version" content="1.0.8">
 </head>
 <body>
     <script src="script.js"></script>
@@ -14,13 +14,7 @@
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(registration => {
-                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
-                    })
-                    .catch(error => {
-                        console.log('ServiceWorker registration failed: ', error);
-                    });
+                navigator.serviceWorker.register('/sw.js');
             });
         }
     </script>
