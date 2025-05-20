@@ -18,12 +18,26 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        
+
+      # Add a build step to generate static files (if needed)
+      - name: Build
+        run: |
+          # Add your build commands here
+          # For example, if you have an HTML, CSS, and JS project, you might not need a build step.
+          # If you are using a static site generator like Jekyll or Hugo, you would run the build command here.
+          echo "No build step required for this project."
+
+      # Upload the static files as an artifact
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.' # Replace '.' with the actual path to your static files if they are in a subdirectory
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
-          
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
