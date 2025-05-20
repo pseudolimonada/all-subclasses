@@ -132,65 +132,89 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	function preloadImages() {
 		const imageUrls = {
+			// Barbarian and subclasses
 			'Barbarian': 'classes/Barbarian.png',
+			'Path of the Berserker': 'subclasses/Berserker Barbarian.png',
+			'Path of the Wild Heart': 'subclasses/Wild Heart Barbarian.png',
+			'Path of the World Tree': 'subclasses/World Tree Barbarian.png',
+			'Path of the Zealot': 'subclasses/Zealot Barbarian.png',
+			
+			// Bard and subclasses
+			'Bard': 'classes/Bard.png',
+			'College of Dance': 'subclasses/Dance Bard.png',
+			'College of Glamour': 'subclasses/Glamour Bard.png',
+			'College of Lore': 'subclasses/Lore Bard.png',
+			'College of Valor': 'subclasses/Valor Bard.png',
+			
+			// Cleric and subclasses
 			'Cleric': 'classes/Cleric.png',
+			'Life Domain': 'subclasses/Life Cleric.png',
+			'Light Domain': 'subclasses/Light Cleric.png',
+			'Trickery Domain': 'subclasses/Trickery Cleric.png',
+			'War Domain': 'subclasses/War Cleric.png',
+			
+			// Druid and subclasses
 			'Druid': 'classes/Druid.png',
+			'Circle of the Land': 'subclasses/Land Druid.png',
+			'Circle of the Moon': 'subclasses/Moon Druid.png',
+			'Circle of the Sea': 'subclasses/Sea Druid.png',
+			'Circle of the Stars': 'subclasses/Stars Druid.png',
+			
+			// Fighter and subclasses
 			'Fighter': 'classes/Fighter.png',
+			'Battle Master': 'subclasses/Battle Master Fighter.png',
+			'Champion': 'subclasses/Champion Fighter.png',
+			'Eldritch Knight': 'subclasses/Eldritch Knight Fighter.png',
+			'Psi Warrior': 'subclasses/Psi Warrior Fighter.png',
+			
+			// Monk and subclasses
 			'Monk': 'classes/Monk.png',
+			'Warrior of Mercy': 'subclasses/Mercy Monk.png',
+			'Warrior of Shadow': 'subclasses/Shadow Monk.png',
+			'Warrior of the Elements': 'subclasses/Elements Monk.png',
+			'Warrior of the Open Hand': 'subclasses/Open Hand Monk.png',
+			
+			// Paladin and subclasses
 			'Paladin': 'classes/Paladin.png',
+			'Oath of Devotion': 'subclasses/Devotion Paladin.png',
+			'Oath of Glory': 'subclasses/Glory Paladin.png',
+			'Oath of the Ancients': 'subclasses/Ancients Paladin.png',
+			'Oath of Vengeance': 'subclasses/Vengeance Paladin.png',
+			
+			// Ranger and subclasses
 			'Ranger': 'classes/Ranger.png',
+			'Beast Master': 'subclasses/Beast Master Ranger.png',
+			'Fey Wanderer': 'subclasses/Fey Wanderer Ranger.png',
+			'Gloom Stalker': 'subclasses/Gloom Stalker Ranger.png',
+			'Hunter': 'subclasses/Hunter Ranger.png',
+			
+			// Rogue and subclasses
 			'Rogue': 'classes/Rogue.png',
+			'Arcane Trickster': 'subclasses/Arcane Trickster Rogue.png',
+			'Assassin': 'subclasses/Assassin Rogue.png',
+			'Soulknife': 'subclasses/Soulknife Rogue.png',
+			'Thief': 'subclasses/Thief Rogue.png',
+			
+			// Sorcerer and subclasses
 			'Sorcerer': 'classes/Sorcerer.png',
+			'Aberrant Sorcery': 'subclasses/Aberrant Sorcerer.png',
+			'Clockwork Sorcery': 'subclasses/Clockwork Sorcerer.png',
+			'Draconic Sorcery': 'subclasses/Draconic Sorcerer.png',
+			'Wild Magic Sorcery': 'subclasses/Wild Magic Sorcerer.png',
+			
+			// Warlock and subclasses
 			'Warlock': 'classes/Warlock.png',
+			'Archfey Patron': 'subclasses/Archfey Warlock.png',
+			'Celestial Patron': 'subclasses/Celestial Warlock.png',
+			'Fiend Patron': 'subclasses/Fiend Warlock.png',
+			'Great Old One Patron': 'subclasses/Great Old One Warlock.png',
+			
+			// Wizard and subclasses
 			'Wizard': 'classes/Wizard.png',
-			'Aberrant Sorcerer': 'subclasses/Aberrant Sorcerer.png',
-			'Abjurer Wizard': 'subclasses/Abjurer Wizard.png',
-			'Ancients Paladin': 'subclasses/Ancients Paladin.png',
-			'Arcane Trickster Rogue': 'subclasses/Arcane Trickster Rogue.png',
-			'Archfey Warlock': 'subclasses/Archfey Warlock.png',
-			'Assassin Rogue': 'subclasses/Assassin Rogue.png',
-			'Battle Master Fighter': 'subclasses/Battle Master Fighter.png',
-			'Beast Master Ranger': 'subclasses/Beast Master Ranger.png',
-			'Berserker Barbarian': 'subclasses/Berserker Barbarian.png',
-			'Celestial Warlock': 'subclasses/Celestial Warlock.png',
-			'Champion Fighter': 'subclasses/Champion Fighter.png',
-			'Clockwork Sorcerer': 'subclasses/Clockwork Sorcerer.png',
-			'Dance Bard': 'subclasses/Dance Bard.png',
-			'Devotion Paladin': 'subclasses/Devotion Paladin.png',
-			'Diviner Wizard': 'subclasses/Diviner Wizard.png',
-			'Draconic Sorcerer': 'subclasses/Draconic Sorcerer.png',
-			'Eldritch Knight Fighter': 'subclasses/Eldritch Knight Fighter.png',
-			'Elements Monk': 'subclasses/Elements Monk.png',
-			'Evoker Wizard': 'subclasses/Evoker Wizard.png',
-			'Fey Wanderer Ranger': 'subclasses/Fey Wanderer Ranger.png',
-			'Fiend Warlock': 'subclasses/Fiend Warlock.png',
-			'Glamour Bard': 'subclasses/Glamour Bard.png',
-			'Gloom Stalker Ranger': 'subclasses/Gloom Stalker Ranger.png',
-			'Glory Paladin': 'subclasses/Glory Paladin.png',
-			'Great Old One Warlock': 'subclasses/Great Old One Warlock.png',
-			'Hunter Ranger': 'subclasses/Hunter Ranger.png',
-			'Illusionist Wizard': 'subclasses/Illusionist Wizard.png',
-			'Land Druid': 'subclasses/Land Druid.png',
-			'Life Cleric': 'subclasses/Life Cleric.png',
-			'Light Cleric': 'subclasses/Light Cleric.png',
-			'Lore Bard': 'subclasses/Lore Bard.png',
-			'Mercy Monk': 'subclasses/Mercy Monk.png',
-			'Moon Druid': 'subclasses/Moon Druid.png',
-			'Open Hand Monk': 'subclasses/Open Hand Monk.png',
-			'Psi Warrior Fighter': 'subclasses/Psi Warrior Fighter.png',
-			'Sea Druid': 'subclasses/Sea Druid.png',
-			'Shadow Monk': 'subclasses/Shadow Monk.png',
-			'Soulknife Rogue': 'subclasses/Soulknife Rogue.png',
-			'Stars Druid': 'subclasses/Stars Druid.png',
-			'Thief Rogue': 'subclasses/Thief Rogue.png',
-			'Trickery Cleric': 'subclasses/Trickery Cleric.png',
-			'Valor Bard': 'subclasses/Valor Bard.png',
-			'Vengeance Paladin': 'subclasses/Vengeance Paladin.png',
-			'War Cleric': 'subclasses/War Cleric.png',
-			'Wild Heart Barbarian': 'subclasses/Wild Heart Barbarian.png',
-			'Wild Magic Sorcerer': 'subclasses/Wild Magic Sorcerer.png',
-			'World Tree Barbarian': 'subclasses/World Tree Barbarian.png',
-			'Zealot Barbarian': 'subclasses/Zealot Barbarian.png'
+			'Abjurer': 'subclasses/Abjurer Wizard.png',
+			'Diviner': 'subclasses/Diviner Wizard.png',
+			'Evoker': 'subclasses/Evoker Wizard.png',
+			'Illusionist': 'subclasses/Illusionist Wizard.png'
 		};
 
 		for (const key in imageUrls) {
