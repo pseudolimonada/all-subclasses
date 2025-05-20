@@ -15,6 +15,91 @@ document.addEventListener("DOMContentLoaded", function() {
 		"Wizard": ["Abjurer", "Diviner", "Evoker", "Illusionist"]
 	};
 	
+	// Mapping of subclass display names to image filenames
+	const subclassImageMap = {
+		// Barbarian subclasses
+		"Path of the Berserker": "Berserker Barbarian.png",
+		"Path of the Wild Heart": "Wild Heart Barbarian.png",
+		"Path of the World Tree": "World Tree Barbarian.png",
+		"Path of the Zealot": "Zealot Barbarian.png",
+		
+		// Bard subclasses
+		"College of Dance": "Dance Bard.png",
+		"College of Glamour": "Glamour Bard.png",
+		"College of Lore": "Lore Bard.png",
+		"College of Valor": "Valor Bard.png",
+		
+		// Cleric subclasses
+		"Life Domain": "Life Cleric.png",
+		"Light Domain": "Light Cleric.png",
+		"Trickery Domain": "Trickery Cleric.png",
+		"War Domain": "War Cleric.png",
+		
+		// Druid subclasses
+		"Circle of the Land": "Land Druid.png",
+		"Circle of the Moon": "Moon Druid.png",
+		"Circle of the Sea": "Sea Druid.png",
+		"Circle of the Stars": "Stars Druid.png",
+		
+		// Fighter subclasses
+		"Battle Master": "Battle Master Fighter.png",
+		"Champion": "Champion Fighter.png",
+		"Eldritch Knight": "Eldritch Knight Fighter.png",
+		"Psi Warrior": "Psi Warrior Fighter.png",
+		
+		// Monk subclasses
+		"Warrior of Mercy": "Mercy Monk.png",
+		"Warrior of Shadow": "Shadow Monk.png",
+		"Warrior of the Elements": "Elements Monk.png",
+		"Warrior of the Open Hand": "Open Hand Monk.png",
+		
+		// Paladin subclasses
+		"Oath of Devotion": "Devotion Paladin.png",
+		"Oath of Glory": "Glory Paladin.png",
+		"Oath of the Ancients": "Ancients Paladin.png",
+		"Oath of Vengeance": "Vengeance Paladin.png",
+		
+		// Ranger subclasses
+		"Beast Master": "Beast Master Ranger.png",
+		"Fey Wanderer": "Fey Wanderer Ranger.png",
+		"Gloom Stalker": "Gloom Stalker Ranger.png",
+		"Hunter": "Hunter Ranger.png",
+		
+		// Rogue subclasses
+		"Arcane Trickster": "Arcane Trickster Rogue.png",
+		"Assassin": "Assassin Rogue.png",
+		"Soulknife": "Soulknife Rogue.png",
+		"Thief": "Thief Rogue.png",
+		
+		// Sorcerer subclasses
+		"Aberrant Sorcery": "Aberrant Sorcerer.png",
+		"Clockwork Sorcery": "Clockwork Sorcerer.png",
+		"Draconic Sorcery": "Draconic Sorcerer.png",
+		"Wild Magic Sorcery": "Wild Magic Sorcerer.png",
+		
+		// Warlock subclasses
+		"Archfey Patron": "Archfey Warlock.png",
+		"Celestial Patron": "Celestial Warlock.png",
+		"Fiend Patron": "Fiend Warlock.png",
+		"Great Old One Patron": "Great Old One Warlock.png",
+		
+		// Wizard subclasses
+		"Abjurer": "Abjurer Wizard.png",
+		"Diviner": "Diviner Wizard.png",
+		"Evoker": "Evoker Wizard.png",
+		"Illusionist": "Illusionist Wizard.png"
+	};
+	
+	// Get subclass image path based on subclass name
+	function getSubclassImagePath(subclass) {
+		const filename = subclassImageMap[subclass];
+		if (filename) {
+			return `subclasses/${filename}`;
+		}
+		console.error(`No image mapping found for subclass: ${subclass}`);
+		return null;
+	}
+	
 	let currentClassIndex = 0;
 	let currentSubclassIndex = 0;
 	let isTransitioning = false;
@@ -32,32 +117,6 @@ document.addEventListener("DOMContentLoaded", function() {
 			console.warn("Could not load image offset configuration:", error);
 		});
 
-	function formatSubclassFilename(subclass, className) {
-		// Generate variations of the name to try
-		const variations = [
-			// Original full name
-			subclass,
-			// Last word only
-			subclass.split(' ').pop(),
-			// Remove prefixes
-			subclass.replace("Path of the ", "")
-				   .replace("College of ", "")
-				   .replace("Circle of the ", "")
-				   .replace("Warrior of the ", "")
-				   .replace("Warrior of ", "")
-				   .replace("Oath of ", "")
-				   .replace(" Domain", "")
-				   .replace(" Sorcery", "")
-				   .replace(" Patron", ""),
-			// Special cases for specific subclasses
-			subclass.includes("Open Hand") ? "Open Hand" : null,
-			subclass.includes("Hand") ? "Open Hand" : null,
-		].filter(Boolean); // Remove null values
-
-		// Try each variation
-		return variations.map(name => `${name} ${className}.png`);
-	}
-
 	function getImageOffset(filename) {
 		// Extract the filename without extension
 		const basename = filename.replace(/\.[^/.]+$/, "");
@@ -72,74 +131,75 @@ document.addEventListener("DOMContentLoaded", function() {
 	}
 
 	function preloadImages() {
-		const urlsToCache = [
-			'classes/Barbarian.png',
-			'classes/Cleric.png',
-			'classes/Druid.png',
-			'classes/Fighter.png',
-			'classes/Monk.png',
-			'classes/Paladin.png',
-			'classes/Ranger.png',
-			'classes/Rogue.png',
-			'classes/Sorcerer.png',
-			'classes/Warlock.png',
-			'classes/Wizard.png',
-			'subclasses/Aberrant Sorcerer.png',
-			'subclasses/Abjurer Wizard.png',
-			'subclasses/Ancients Paladin.png',
-			'subclasses/Arcane Trickster Rogue.png',
-			'subclasses/Archfey Warlock.png',
-			'subclasses/Assassin Rogue.png',
-			'subclasses/Battle Master Fighter.png',
-			'subclasses/Beast Master Ranger.png',
-			'subclasses/Berserker Barbarian.png',
-			'subclasses/Celestial Warlock.png',
-			'subclasses/Champion Fighter.png',
-			'subclasses/Clockwork Sorcerer.png',
-			'subclasses/Dance Bard.png',
-			'subclasses/Devotion Paladin.png',
-			'subclasses/Diviner Wizard.png',
-			'subclasses/Draconic Sorcerer.png',
-			'subclasses/Eldritch Knight Fighter.png',
-			'subclasses/Elements Monk.png',
-			'subclasses/Evoker Wizard.png',
-			'subclasses/Fey Wanderer Ranger.png',
-			'subclasses/Fiend Warlock.png',
-			'subclasses/Glamour Bard.png',
-			'subclasses/Gloom Stalker Ranger.png',
-			'subclasses/Glory Paladin.png',
-			'subclasses/Great Old One Warlock.png',
-			'subclasses/Hunter Ranger.png',
-			'subclasses/Illusionist Wizard.png',
-			'subclasses/Land Druid.png',
-			'subclasses/Life Cleric.png',
-			'subclasses/Light Cleric.png',
-			'subclasses/Lore Bard.png',
-			'subclasses/Mercy Monk.png',
-			'subclasses/Moon Druid.png',
-			'subclasses/Open Hand Monk.png',
-			'subclasses/Psi Warrior Fighter.png',
-			'subclasses/Sea Druid.png',
-			'subclasses/Shadow Monk.png',
-			'subclasses/Soulknife Rogue.png',
-			'subclasses/Stars Druid.png',
-			'subclasses/Thief Rogue.png',
-			'subclasses/Trickery Cleric.png',
-			'subclasses/Valor Bard.png',
-			'subclasses/Vengeance Paladin.png',
-			'subclasses/War Cleric.png',
-			'subclasses/Wild Heart Barbarian.png',
-			'subclasses/Wild Magic Sorcerer.png',
-			'subclasses/World Tree Barbarian.png',
-			'subclasses/Zealot Barbarian.png'
-		];
+		const imageUrls = {
+			'Barbarian': 'classes/Barbarian.png',
+			'Cleric': 'classes/Cleric.png',
+			'Druid': 'classes/Druid.png',
+			'Fighter': 'classes/Fighter.png',
+			'Monk': 'classes/Monk.png',
+			'Paladin': 'classes/Paladin.png',
+			'Ranger': 'classes/Ranger.png',
+			'Rogue': 'classes/Rogue.png',
+			'Sorcerer': 'classes/Sorcerer.png',
+			'Warlock': 'classes/Warlock.png',
+			'Wizard': 'classes/Wizard.png',
+			'Aberrant Sorcerer': 'subclasses/Aberrant Sorcerer.png',
+			'Abjurer Wizard': 'subclasses/Abjurer Wizard.png',
+			'Ancients Paladin': 'subclasses/Ancients Paladin.png',
+			'Arcane Trickster Rogue': 'subclasses/Arcane Trickster Rogue.png',
+			'Archfey Warlock': 'subclasses/Archfey Warlock.png',
+			'Assassin Rogue': 'subclasses/Assassin Rogue.png',
+			'Battle Master Fighter': 'subclasses/Battle Master Fighter.png',
+			'Beast Master Ranger': 'subclasses/Beast Master Ranger.png',
+			'Berserker Barbarian': 'subclasses/Berserker Barbarian.png',
+			'Celestial Warlock': 'subclasses/Celestial Warlock.png',
+			'Champion Fighter': 'subclasses/Champion Fighter.png',
+			'Clockwork Sorcerer': 'subclasses/Clockwork Sorcerer.png',
+			'Dance Bard': 'subclasses/Dance Bard.png',
+			'Devotion Paladin': 'subclasses/Devotion Paladin.png',
+			'Diviner Wizard': 'subclasses/Diviner Wizard.png',
+			'Draconic Sorcerer': 'subclasses/Draconic Sorcerer.png',
+			'Eldritch Knight Fighter': 'subclasses/Eldritch Knight Fighter.png',
+			'Elements Monk': 'subclasses/Elements Monk.png',
+			'Evoker Wizard': 'subclasses/Evoker Wizard.png',
+			'Fey Wanderer Ranger': 'subclasses/Fey Wanderer Ranger.png',
+			'Fiend Warlock': 'subclasses/Fiend Warlock.png',
+			'Glamour Bard': 'subclasses/Glamour Bard.png',
+			'Gloom Stalker Ranger': 'subclasses/Gloom Stalker Ranger.png',
+			'Glory Paladin': 'subclasses/Glory Paladin.png',
+			'Great Old One Warlock': 'subclasses/Great Old One Warlock.png',
+			'Hunter Ranger': 'subclasses/Hunter Ranger.png',
+			'Illusionist Wizard': 'subclasses/Illusionist Wizard.png',
+			'Land Druid': 'subclasses/Land Druid.png',
+			'Life Cleric': 'subclasses/Life Cleric.png',
+			'Light Cleric': 'subclasses/Light Cleric.png',
+			'Lore Bard': 'subclasses/Lore Bard.png',
+			'Mercy Monk': 'subclasses/Mercy Monk.png',
+			'Moon Druid': 'subclasses/Moon Druid.png',
+			'Open Hand Monk': 'subclasses/Open Hand Monk.png',
+			'Psi Warrior Fighter': 'subclasses/Psi Warrior Fighter.png',
+			'Sea Druid': 'subclasses/Sea Druid.png',
+			'Shadow Monk': 'subclasses/Shadow Monk.png',
+			'Soulknife Rogue': 'subclasses/Soulknife Rogue.png',
+			'Stars Druid': 'subclasses/Stars Druid.png',
+			'Thief Rogue': 'subclasses/Thief Rogue.png',
+			'Trickery Cleric': 'subclasses/Trickery Cleric.png',
+			'Valor Bard': 'subclasses/Valor Bard.png',
+			'Vengeance Paladin': 'subclasses/Vengeance Paladin.png',
+			'War Cleric': 'subclasses/War Cleric.png',
+			'Wild Heart Barbarian': 'subclasses/Wild Heart Barbarian.png',
+			'Wild Magic Sorcerer': 'subclasses/Wild Magic Sorcerer.png',
+			'World Tree Barbarian': 'subclasses/World Tree Barbarian.png',
+			'Zealot Barbarian': 'subclasses/Zealot Barbarian.png'
+		};
 
-		urlsToCache.forEach(url => {
+		for (const key in imageUrls) {
+			const url = imageUrls[key];
 			const img = new Image();
 			img.src = url;
 			img.onload = () => console.log(`Preloaded image: ${url}`);
 			img.onerror = () => console.error(`Failed to preload image: ${url}`);
-		});
+		}
 	}
 
 	function createViewer() {
@@ -352,31 +412,43 @@ document.addEventListener("DOMContentLoaded", function() {
 			imageContainer.className = 'image-container';
 			
 			const img = document.createElement('img');
-			const possibleFilenames = formatSubclassFilename(subclass, classes[currentClassIndex]);
 			
-			// Track which filename was successfully loaded
-			let loadedFilename = '';
-			let loadedImage = false;
-			
-			function tryNextFilename(filenameIndex) {
-				if (filenameIndex >= possibleFilenames.length || loadedImage) return;
-				
-				const filename = possibleFilenames[filenameIndex];
-				img.src = `subclasses/${filename}`;
-				img.onerror = () => tryNextFilename(filenameIndex + 1);
-				img.onload = () => {
-					loadedImage = true;
-					loadedFilename = filename;
+			// Use the mapping function to get the image path
+			const imagePath = getSubclassImagePath(subclass);
+			if (imagePath) {
+				img.src = imagePath;
+				img.onerror = () => {
+					console.error(`Failed to load image: ${imagePath}`);
+					// Try fallback options if the mapped filename doesn't work
+					const fallbacks = formatSubclassFilename(subclass, classes[currentClassIndex]);
+					let fallbackIndex = 0;
 					
+					function tryFallback() {
+						if (fallbackIndex >= fallbacks.length) {
+							console.error("All image loading attempts failed for: " + subclass);
+							return;
+						}
+						
+						const fallbackPath = `subclasses/${fallbacks[fallbackIndex]}`;
+						console.log(`Trying fallback: ${fallbackPath}`);
+						img.src = fallbackPath;
+						fallbackIndex++;
+					}
+					
+					img.onerror = tryFallback;
+					tryFallback();
+				};
+				
+				img.onload = () => {
 					// Apply appropriate offset when the image is loaded
-					const offset = getImageOffset(loadedFilename);
+					const offset = getImageOffset(img.src.split('/').pop());
 					if (offset !== 0) {
 						img.style.transform = `translateX(${offset}%)`;
 					}
 				};
+			} else {
+				console.error(`No image path found for subclass: ${subclass}`);
 			}
-			
-			tryNextFilename(0);
 			
 			const caption = document.createElement('div');
 			caption.className = 'class-caption';
