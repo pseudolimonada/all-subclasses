@@ -1,0 +1,13 @@
+https://5e.tools/img/book/XPHB/026-03-002.barbarian-symbol.webp
+https://5e.tools/img/book/XPHB/027-03-003.bard-symbol.webp
+https://5e.tools/img/book/XPHB/028-03-004.cleric-symbol.webp
+https://5e.tools/img/book/XPHB/029-03-005.druid-symbol.webp
+https://5e.tools/img/book/XPHB/030-03-006.fighter-symbol.webp
+https://5e.tools/img/book/XPHB/031-03-007.monk-symbol.webp
+https://5e.tools/img/book/XPHB/032-03-008.paladin-symbol.webp
+https://5e.tools/img/book/XPHB/033-03-009.ranger-symbol.webp
+https://5e.tools/img/book/XPHB/034-03-010.rogue-symbol.webp
+https://5e.tools/img/book/XPHB/035-03-011.sorcerer-symbol.webp
+https://5e.tools/img/book/XPHB/036-03-012.warlock-symbol.webp
+https://5e.tools/img/book/XPHB/037-03-013.wizard-symbol.webp
+https://aistudio.google.com/app/prompts/1Sl8M8qD0K81tctPaqT_T8EzHAH0nZpw2

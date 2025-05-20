@@ -1,0 +1,449 @@
+@import url('https://fonts.googleapis.com/css2?family=Spectral:wght@400;600&display=swap');
+
+html {
+    height: 100%;
+    background-color: #111;
+}
+
+body {
+    background-color: #111;
+    background-image: none;
+    color: #f0e6d2;
+    font-family: 'Spectral', serif;
+    margin: 0;
+    min-height: 100vh;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    color: #c8aa6e;
+    font-size: 3.5em;
+    padding: 40px 0;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    text-shadow: none;
+    font-weight: 300;
+}
+
+/* Main window title */
+.main-title {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: #c8aa6e;
+    font-size: 1.8em; /* Reduced from 2.5em */
+    margin: 0;
+    padding: 15px 0; /* Reduced padding */
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    font-weight: 400;
+    z-index: 10;
+}
+
+/* Viewer container for accordion style */
+.viewer-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 50px; /* Reduced from 60px */
+}
+
+/* Class viewer for displaying classes */
+.class-viewer {
+    position: relative;
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px;
+}
+
+/* Individual class item in the viewer */
+.class-item {
+    position: absolute;
+    width: auto;
+    height: 90%;
+    opacity: 0;
+    /* Use same timing function for all transitions */
+    transition: transform 0.7s cubic-bezier(0.2, 0.1, 0.3, 1), 
+                opacity 0.7s cubic-bezier(0.2, 0.1, 0.3, 1);
+    pointer-events: none;
+    transform: translateX(100px);
+    will-change: transform, opacity;
+}
+
+.class-item.active {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateX(0);
+}
+
+.class-item.slide-left {
+    transform: translateX(-100px);
+    opacity: 0;
+    /* Keep identical transition timing to avoid jumps */
+    transition: transform 0.7s cubic-bezier(0.2, 0.1, 0.3, 1), 
+                opacity 0.7s cubic-bezier(0.2, 0.1, 0.3, 1);
+}
+
+.class-item.slide-right {
+    transform: translateX(100px);
+    opacity: 0;
+    /* Keep identical transition timing to avoid jumps */
+    transition: transform 0.7s cubic-bezier(0.2, 0.1, 0.3, 1), 
+                opacity 0.7s cubic-bezier(0.2, 0.1, 0.3, 1);
+}
+
+/* Preview images style */
+.preview-item {
+    position: absolute;
+    height: 70%;
+    opacity: 0.3;
+    filter: blur(2px) brightness(0.5);
+    pointer-events: none;
+    transition: all 0.8s cubic-bezier(0.42, 0, 0.58, 1);
+    will-change: transform, opacity;
+}
+
+.preview-item.left {
+    left: 50px;
+    transform: translateX(-100%) scale(0.8);
+}
+
+.preview-item.right {
+    right: 50px;
+    transform: translateX(100%) scale(0.8);
+}
+
+/* Image style for class images in viewer */
+.class-item img,
+.preview-item img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+}
+
+/* Caption style for class items */
+.class-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to bottom, 
+        rgba(10, 10, 20, 0) 0%,
+        rgba(10, 10, 20, 0.7) 45%,
+        rgba(10, 10, 20, 0.9) 100%);
+    color: #f0e6d2;
+    padding: 15px 15px 15px;
+    text-align: center;
+    font-size: 1.1em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    /* border-left: 1px solid rgba(200, 170, 110, 0.3); */
+    /* border-right: 1px solid rgba(200, 170, 110, 0.3); */
+    border-bottom: 1px solid rgba(200, 170, 110, 0.3);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.class-item:hover .class-caption {
+    opacity: 1;
+}
+
+/* Navigation arrows with custom design */
+.nav-arrow {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #f0e6d2;
+    border: 1px solid #c8aa6e;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 20;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    padding: 0;
+}
+
+.nav-arrow::before {
+    content: none;
+}
+
+.nav-arrow::after {
+    content: none;
+}
+
+.nav-arrow span {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: #f0e6d2;
+    font-size: 24px;
+    line-height: 50px;
+    text-shadow: none;
+}
+
+.nav-arrow:hover {
+    background-color: rgba(40, 30, 10, 0.8);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.nav-arrow:active::before {
+    filter: none;
+}
+
+.nav-prev { left: 20px; }
+.nav-next { right: 20px; }
+
+/* Close button with matching design */
+.close-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: rgba(0, 0, 0, 0.8); /* Make more visible */
+    color: #f0e6d2;
+    border: 1px solid #c8aa6e;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 2000; /* Ensure it's above everything */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    padding: 0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add shadow for visibility */
+    font-weight: normal;
+    pointer-events: auto; /* Explicitly enable pointer events */
+}
+
+.close-button::before {
+    content: none;
+}
+
+.close-button::after {
+    content: none;
+}
+
+.close-button span {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: #f0e6d2;
+    font-size: 24px;
+    line-height: 50px;
+}
+
+.close-button:hover {
+    background-color: rgba(40, 30, 10, 0.8);
+    transform: scale(1.1);
+}
+
+/* Subclass container for full-page view */
+.subclass-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #111;
+    background-image: none;
+    visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    pointer-events: none;
+    padding-top: 50px; /* Reduced from 60px */
+}
+
+.subclass-container.active {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: all;
+}
+
+.subclass-container.fade-out {
+    opacity: 0;
+}
+
+/* Add explicit hidden class */
+.subclass-container.hidden {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Subclass window title */
+.subclass-title {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: #c8aa6e;
+    font-size: 1.2em; /* Reduced from 2.5em */
+    margin: 0;
+    padding: 15px 0; /* Reduced padding */
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    font-weight: 400;
+    z-index: 1010; /* Higher than container but lower than close button */
+}
+
+/* Subclass viewer for displaying subclasses */
+.subclass-viewer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 90vh;
+    position: relative; /* Add positioning context */
+    perspective: 1000px; /* Match class viewer perspective */
+}
+
+.subclass-viewer .class-item {
+    position: absolute;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transform: translateX(100px);
+    transition: transform 0.7s cubic-bezier(0.2, 0.1, 0.3, 1), 
+                opacity 0.7s cubic-bezier(0.2, 0.1, 0.3, 1);
+    will-change: transform, opacity;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: auto;
+    height: 90%;
+}
+
+.subclass-viewer .class-item img {
+    height: 100%;
+    width: auto;
+    max-height: 90vh;
+    object-fit: contain;
+    transition: transform 0.3s ease; /* Add transition for smooth offset changes */
+}
+
+.subclass-viewer .class-item.active {
+    opacity: 1;
+    transform: translateX(0);
+    /* Don't add any additional positioning here to avoid jumps */
+}
+
+.subclass-viewer .class-item.slide-left {
+    transform: translateX(-100px);
+    opacity: 0;
+    transition: transform 0.7s cubic-bezier(0.2, 0.1, 0.3, 1), 
+                opacity 0.7s cubic-bezier(0.2, 0.1, 0.3, 1);
+}
+
+.subclass-viewer .class-item.slide-right {
+    transform: translateX(100px);
+    opacity: 0;
+    transition: transform 0.7s cubic-bezier(0.2, 0.1, 0.3, 1), 
+                opacity 0.7s cubic-bezier(0.2, 0.1, 0.3, 1);
+}
+
+/* New image container style in subclass viewer */
+.subclass-viewer .image-container {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Caption style for subclass items */
+.subclass-viewer .class-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to bottom, 
+        rgba(10, 10, 20, 0) 0%,
+        rgba(10, 10, 20, 0.7) 45%,
+        rgba(10, 10, 20, 0.9) 100%);
+    width: 100%;
+    margin: 0;
+    color: #f0e6d2;
+    padding: 15px 15px 15px;
+    text-align: center;
+    font-size: 1.1em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0;
+    transition: opacity 0.4s ease, transform 0.3s ease; /* Add transition for caption adjustments */
+    /* border-left: 1px solid rgba(200, 170, 110, 0.3); */
+    /* border-right: 1px solid rgba(200, 170, 110, 0.3); */
+    border-bottom: 1px solid rgba(200, 170, 110, 0.3);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.subclass-viewer .class-item:hover .class-caption {
+    opacity: 1;
+}
+
+/* Fix arrow positioning in subclass view */
+.subclass-container .nav-arrow {
+    z-index: 1020;
+}
+
+/* Remove the fixed centering adjustment since we're now using dynamic values */
+/* 
+img.center-adjust {
+    transform: translateX(-6%);
+    transition: transform 0.3s ease;
+}
+
+.class-item:hover img.center-adjust {
+    transform: translateX(-6%);
+}
+
+.subclass-viewer .image-container img.center-adjust + .class-caption {
+    transform: translateX(-6%);
+    width: 100%;
+}
+*/
+
+/* Add transition properties to ensure smooth centering adjustments */
+.subclass-viewer .class-item img {
+    height: 100%;
+    width: auto;
+    max-height: 90vh;
+    object-fit: contain;
+    transition: transform 0.3s ease; /* Add transition for smooth offset changes */
+}
+
+/* Ensure captions can be positioned individually when needed */
+.subclass-viewer .class-caption {
+    transition: transform 0.3s ease; /* Add transition for caption adjustments */
+}
