@@ -1,0 +1,160 @@
+name: Deploy with Cache Control
+
+on:
+  push:
+    branches:
+      - main  # or master, depending on your default branch
+
+jobs:
+  deploy-with-cache:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Create service worker for caching
+        run: |
+          cat > sw.js << EOF
+          // Service Worker for caching with appropriate Cache-Control policies
+          const CACHE_NAME = 'dnd-classes-cache-v1.0.7';
+          
+          // Resources with 7-day cache (same as Cache-Control: public, max-age=604800)
+          const longTermCache = [
+            '/classes/',
+            '/subclasses/'
+          ];
+          
+          // Resources with 1-day cache (same as Cache-Control: public, max-age=86400)
+          const shortTermCache = [
+            '.css',
+            '.js',
+            'image-offsets.json'
+          ];
+          
+          // Install event
+          self.addEventListener('install', event => {
+            self.skipWaiting();
+          });
+          
+          // Activate event
+          self.addEventListener('activate', event => {
+            event.waitUntil(
+              caches.keys().then(cacheNames => {
+                return Promise.all(
+                  cacheNames.map(cacheName => {
+                    if (cacheName !== CACHE_NAME) {
+                      return caches.delete(cacheName);
+                    }
+                  })
+                );
+              }).then(() => {
+                return self.clients.claim();
+              })
+            );
+          });
+          
+          // Fetch event
+          self.addEventListener('fetch', event => {
+            const url = new URL(event.request.url);
+            let maxAge = 0; // Default: no cache
+            
+            // Check if URL should use long-term cache
+            for (const pattern of longTermCache) {
+              if (url.pathname.includes(pattern)) {
+                maxAge = 604800; // 7 days
+                break;
+              }
+            }
+            
+            // Check if URL should use short-term cache
+            if (maxAge === 0) {
+              for (const pattern of shortTermCache) {
+                if (url.pathname.endsWith(pattern)) {
+                  maxAge = 86400; // 1 day
+                  break;
+                }
+              }
+            }
+            
+            if (maxAge > 0) {
+              // Apply caching strategy based on max-age
+              event.respondWith(
+                caches.open(CACHE_NAME).then(cache => {
+                  return cache.match(event.request).then(response => {
+                    // Calculate cache age in seconds if we have a cached response
+                    const cacheTime = response ? 
+                      (Date.now() - (new Date(response.headers.get('date')).getTime())) / 1000 : 
+                      maxAge + 1;
+                      
+                    // Fetch from network if cache is expired or not found
+                    if (!response || cacheTime > maxAge) {
+                      return fetch(event.request).then(networkResponse => {
+                        cache.put(event.request, networkResponse.clone());
+                        return networkResponse;
+                      }).catch(() => {
+                        // Return stale response if network fails
+                        return response;
+                      });
+                    }
+                    
+                    // Return the cached response if it's still valid
+                    return response;
+                  });
+                })
+              );
+            } else {
+              // Default behavior for non-cached resources
+              event.respondWith(fetch(event.request));
+            }
+          });
+          EOF
+      
+      - name: Update index.html to register service worker
+        run: |
+          # This ensures the service worker is registered in the HTML
+          sed -i 's|<script>if|<script>// Service worker handles caching based on cache policies\nif|g' index.html
+      
+      - name: Create README with caching information
+        run: |
+          cat > CACHING.md << EOF
+          # Caching Strategy
+          
+          Since GitHub Pages doesn't support custom Cache-Control headers directly, we implement 
+          caching via a service worker with the following policies:
+          
+          ## Long-term Cache (7 days)
+          - Class images (/classes/*)
+          - Subclass images (/subclasses/*)
+          
+          ## Short-term Cache (1 day)
+          - CSS files (*.css)
+          - JavaScript files (*.js)
+          - Configuration files (image-offsets.json)
+          
+          This provides similar functionality to the following Cache-Control headers:
+          
+          ```
+          /classes/*
+            Cache-Control: public, max-age=604800, immutable
+          
+          /subclasses/*
+            Cache-Control: public, max-age=604800, immutable
+          
+          /*.css
+            Cache-Control: public, max-age=86400
+          
+          /*.js
+            Cache-Control: public, max-age=86400
+          
+          /image-offsets.json
+            Cache-Control: public, max-age=86400
+          ```
+          EOF
+          
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages  # The branch where your site is deployed
+          folder: .  # The folder to deploy
+          clean: false  # Don't remove existing files

@@ -130,102 +130,6 @@ document.addEventListener("DOMContentLoaded", function() {
 		return 0;
 	}
 
-	function preloadImages() {
-		const imageUrls = {
-			// Barbarian and subclasses
-			'Barbarian': 'classes/Barbarian.png',
-			'Path of the Berserker': 'subclasses/Berserker Barbarian.png',
-			'Path of the Wild Heart': 'subclasses/Wild Heart Barbarian.png',
-			'Path of the World Tree': 'subclasses/World Tree Barbarian.png',
-			'Path of the Zealot': 'subclasses/Zealot Barbarian.png',
-			
-			// Bard and subclasses
-			'Bard': 'classes/Bard.png',
-			'College of Dance': 'subclasses/Dance Bard.png',
-			'College of Glamour': 'subclasses/Glamour Bard.png',
-			'College of Lore': 'subclasses/Lore Bard.png',
-			'College of Valor': 'subclasses/Valor Bard.png',
-			
-			// Cleric and subclasses
-			'Cleric': 'classes/Cleric.png',
-			'Life Domain': 'subclasses/Life Cleric.png',
-			'Light Domain': 'subclasses/Light Cleric.png',
-			'Trickery Domain': 'subclasses/Trickery Cleric.png',
-			'War Domain': 'subclasses/War Cleric.png',
-			
-			// Druid and subclasses
-			'Druid': 'classes/Druid.png',
-			'Circle of the Land': 'subclasses/Land Druid.png',
-			'Circle of the Moon': 'subclasses/Moon Druid.png',
-			'Circle of the Sea': 'subclasses/Sea Druid.png',
-			'Circle of the Stars': 'subclasses/Stars Druid.png',
-			
-			// Fighter and subclasses
-			'Fighter': 'classes/Fighter.png',
-			'Battle Master': 'subclasses/Battle Master Fighter.png',
-			'Champion': 'subclasses/Champion Fighter.png',
-			'Eldritch Knight': 'subclasses/Eldritch Knight Fighter.png',
-			'Psi Warrior': 'subclasses/Psi Warrior Fighter.png',
-			
-			// Monk and subclasses
-			'Monk': 'classes/Monk.png',
-			'Warrior of Mercy': 'subclasses/Mercy Monk.png',
-			'Warrior of Shadow': 'subclasses/Shadow Monk.png',
-			'Warrior of the Elements': 'subclasses/Elements Monk.png',
-			'Warrior of the Open Hand': 'subclasses/Open Hand Monk.png',
-			
-			// Paladin and subclasses
-			'Paladin': 'classes/Paladin.png',
-			'Oath of Devotion': 'subclasses/Devotion Paladin.png',
-			'Oath of Glory': 'subclasses/Glory Paladin.png',
-			'Oath of the Ancients': 'subclasses/Ancients Paladin.png',
-			'Oath of Vengeance': 'subclasses/Vengeance Paladin.png',
-			
-			// Ranger and subclasses
-			'Ranger': 'classes/Ranger.png',
-			'Beast Master': 'subclasses/Beast Master Ranger.png',
-			'Fey Wanderer': 'subclasses/Fey Wanderer Ranger.png',
-			'Gloom Stalker': 'subclasses/Gloom Stalker Ranger.png',
-			'Hunter': 'subclasses/Hunter Ranger.png',
-			
-			// Rogue and subclasses
-			'Rogue': 'classes/Rogue.png',
-			'Arcane Trickster': 'subclasses/Arcane Trickster Rogue.png',
-			'Assassin': 'subclasses/Assassin Rogue.png',
-			'Soulknife': 'subclasses/Soulknife Rogue.png',
-			'Thief': 'subclasses/Thief Rogue.png',
-			
-			// Sorcerer and subclasses
-			'Sorcerer': 'classes/Sorcerer.png',
-			'Aberrant Sorcery': 'subclasses/Aberrant Sorcerer.png',
-			'Clockwork Sorcery': 'subclasses/Clockwork Sorcerer.png',
-			'Draconic Sorcery': 'subclasses/Draconic Sorcerer.png',
-			'Wild Magic Sorcery': 'subclasses/Wild Magic Sorcerer.png',
-			
-			// Warlock and subclasses
-			'Warlock': 'classes/Warlock.png',
-			'Archfey Patron': 'subclasses/Archfey Warlock.png',
-			'Celestial Patron': 'subclasses/Celestial Warlock.png',
-			'Fiend Patron': 'subclasses/Fiend Warlock.png',
-			'Great Old One Patron': 'subclasses/Great Old One Warlock.png',
-			
-			// Wizard and subclasses
-			'Wizard': 'classes/Wizard.png',
-			'Abjurer': 'subclasses/Abjurer Wizard.png',
-			'Diviner': 'subclasses/Diviner Wizard.png',
-			'Evoker': 'subclasses/Evoker Wizard.png',
-			'Illusionist': 'subclasses/Illusionist Wizard.png'
-		};
-
-		for (const key in imageUrls) {
-			const url = imageUrls[key];
-			const img = new Image();
-			img.src = url;
-			img.onload = () => console.log(`Preloaded image: ${url}`);
-			img.onerror = () => console.error(`Failed to preload image: ${url}`);
-		}
-	}
-
 	function createViewer() {
 		const container = document.createElement('div');
 		container.className = 'viewer-container';
@@ -584,7 +488,4 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	// Initialize with first class
 	showClass(0);
-
-	// Preload images after DOM is loaded
-	preloadImages();
 });
