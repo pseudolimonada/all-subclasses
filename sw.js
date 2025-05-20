@@ -10,75 +10,100 @@ const urlsToCache = [
   
   // Main classes in order of appearance
   '/classes/Barbarian.png',
-  '/classes/Bard.png',
-  '/classes/Cleric.png',
-  '/classes/Druid.png',
-  '/classes/Fighter.png',
-  '/classes/Monk.png',
-  '/classes/Paladin.png',
-  '/classes/Ranger.png',
-  '/classes/Rogue.png',
-  '/classes/Sorcerer.png',
-  '/classes/Warlock.png',
-  '/classes/Wizard.png',
-  
+
   // Barbarian subclasses (first class)
   '/subclasses/Berserker Barbarian.png',
   '/subclasses/Wild Heart Barbarian.png',
   '/subclasses/World Tree Barbarian.png',
   '/subclasses/Zealot Barbarian.png',
   
+
+
+  '/classes/Bard.png',
+
   // Bard subclasses (second class)
   '/subclasses/Dance Bard.png',
   '/subclasses/Glamour Bard.png',
   '/subclasses/Lore Bard.png',
   '/subclasses/Valor Bard.png',
   
+
+  '/classes/Cleric.png',
+
   // Remaining subclasses in order
   '/subclasses/Life Cleric.png',
   '/subclasses/Light Cleric.png',
   '/subclasses/Trickery Cleric.png',
   '/subclasses/War Cleric.png',
   
+  '/classes/Druid.png',
+
   '/subclasses/Land Druid.png',
   '/subclasses/Moon Druid.png',
   '/subclasses/Sea Druid.png',
   '/subclasses/Stars Druid.png',
-  
+
+  '/classes/Fighter.png',
+
   '/subclasses/Battle Master Fighter.png',
   '/subclasses/Champion Fighter.png',
   '/subclasses/Eldritch Knight Fighter.png',
   '/subclasses/Psi Warrior Fighter.png',
   
+
+  '/classes/Monk.png',
+
+
   '/subclasses/Mercy Monk.png',
   '/subclasses/Shadow Monk.png',
   '/subclasses/Elements Monk.png',
   '/subclasses/Open Hand Monk.png',
   
+
+  '/classes/Paladin.png',
+
+
   '/subclasses/Devotion Paladin.png',
   '/subclasses/Glory Paladin.png',
   '/subclasses/Ancients Paladin.png',
   '/subclasses/Vengeance Paladin.png',
   
+  
+  '/classes/Ranger.png',
+
+
   '/subclasses/Beast Master Ranger.png',
   '/subclasses/Fey Wanderer Ranger.png',
   '/subclasses/Gloom Stalker Ranger.png',
   '/subclasses/Hunter Ranger.png',
-  
+
+  '/classes/Rogue.png',
+
+
   '/subclasses/Arcane Trickster Rogue.png',
   '/subclasses/Assassin Rogue.png',
   '/subclasses/Soulknife Rogue.png',
   '/subclasses/Thief Rogue.png',
+  
+
+  '/classes/Sorcerer.png',
+  
   
   '/subclasses/Aberrant Sorcerer.png',
   '/subclasses/Clockwork Sorcerer.png',
   '/subclasses/Draconic Sorcerer.png',
   '/subclasses/Wild Magic Sorcerer.png',
   
+  '/classes/Warlock.png',
+
+
   '/subclasses/Archfey Warlock.png',
   '/subclasses/Celestial Warlock.png',
   '/subclasses/Fiend Warlock.png',
   '/subclasses/Great Old One Warlock.png',
+
+  '/classes/Wizard.png',
+  
   
   '/subclasses/Abjurer Wizard.png',
   '/subclasses/Diviner Wizard.png',
