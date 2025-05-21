@@ -408,6 +408,12 @@ h1 {
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
+/* Fix hover effect for image container in subclass view */
+.subclass-viewer .image-container:hover .class-caption {
+    opacity: 1;
+}
+
+/* Keep the original hover effect for the class items too */
 .subclass-viewer .class-item:hover .class-caption {
     opacity: 1;
 }
